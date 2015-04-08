@@ -79,4 +79,10 @@ public class Slingshot : MonoBehaviour
 		projectile.transform.position = launchPos;
 		projectile.rigidbody.isKinematic = true;
 	}//end OnMouseDown
+
+	public void SetPrefab(GameObject obj)
+	{
+		prefabProjectile = obj;
+	}//end SetPrefab
+
 }
