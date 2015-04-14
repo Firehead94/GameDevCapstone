@@ -26,6 +26,10 @@ public class Enemy : MonoBehaviour
 		if(transform.position.x < leftX)
 		{
 			Destroy(this.gameObject);
+			GameObject go = GameObject.Find("Slingshot");
+			Slingshot slingShot = go.GetComponent<Slingshot>();
+			slingShot.playerHealth--;
+
 		}//end if
 	}
 
@@ -48,14 +52,16 @@ public class Enemy : MonoBehaviour
 		}
 	}//end position
 
-//		void OnCollisionEnter(Collision coll)
-//		{	
-//			GameObject other = coll.gameObject;
-//			if(other.tag == "EnergyProjectile")
-//			{
-//				Destroy(coll.gameObject);
-//			}
-//		Destroy (other);
-//	
-//		}//end OnCollisionEnter
+	void OnCollisionEnter(Collision coll)
+	{
+		GameObject go = GameObject.Find("Slingshot");
+		Slingshot slingShot = go.GetComponent<Slingshot>();
+
+		if(coll.gameObject.tag == "Asteroid")
+		{
+			slingShot.playerHealth--;
+		}
+
+	}//end OnCollisionEnter
+
 }

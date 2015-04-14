@@ -1,15 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Timers;
 
 public class RandomSpawner : MonoBehaviour 
 {
 	public static RandomSpawner RS;
+	public static Timer waveTimer;
+	public static int ticker = 120;
 
 	public GameObject[] prefabEnemies;
 	public float enemySpawnPerSecond = 0.5f;
 	public float enemySpawnPadding = 1.5f;
-
 	public bool ______________;
 
 	//Delay between Enemy spawns
@@ -18,13 +20,15 @@ public class RandomSpawner : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
-		
+		waveTimer = new Timer(1000);
+		waveTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
+		waveTimer.Enabled = true;
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
-		
+
 	}
 
 	void Awake()
@@ -35,7 +39,10 @@ public class RandomSpawner : MonoBehaviour
 
 		Invoke ("SpawnEnemy", enemySpawnRate);
 	}//end Awake
-	
+
+	/**
+	 * Begins spawning enemies as soon as scene begins
+	 */
 	public void SpawnEnemy()
 	{
 		//Pick random enemy prefab to instantiate
@@ -54,4 +61,24 @@ public class RandomSpawner : MonoBehaviour
 		Invoke ("SpawnEnemy", enemySpawnRate);
 	}//end SpawnEnemy
 
+	/**
+	 * Keeps track of ticker timer and stops the timer if ticker reaches 0
+	 */
+	private static void OnTimedEvent(object source, ElapsedEventArgs e)
+	{
+		ticker--;
+		print (ticker);
+		if(ticker == 0)
+		{
+			waveTimer.Stop();
+		}
+	}//end OnTimedEvent
+
+	/**
+	 * Stops the wave if ticker gets to 0 and player has at least one life
+	 */
+	void StopWave()
+	{
+
+	}//end StopWave
 }
