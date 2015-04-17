@@ -7,7 +7,7 @@ public class RandomSpawner : MonoBehaviour
 {
 	public static RandomSpawner RS;
 	public static Timer waveTimer;
-	public static int ticker = 120;
+	public static int ticker = 20;
 
 	public GameObject[] prefabEnemies;
 	public float enemySpawnPerSecond = 0.5f;

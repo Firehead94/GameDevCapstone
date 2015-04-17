@@ -1,14 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class StartGame : MonoBehaviour {
-
-
-    [SerializeField]
-    private string firstLevel;
-
+public class StartGame : MonoBehaviour 
+{
     public void loadGame()
     {
-        Application.LoadLevel(firstLevel);    
+        Application.LoadLevel("Space_Battle");    
     }
 }

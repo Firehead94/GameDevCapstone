@@ -3,9 +3,16 @@ using System.Collections;
 
 public class Enemy : MonoBehaviour 
 {
+	// Max distance an enemy can move to the left
 	public static float leftX = -40f;
+
+	//Max Up and Down that a fast enemy can move
+	public float moveUp = 2f;
+	public float moveDown = -2f;
+
 	public float speed = 10f;
 	public int score = 10;
+	GameObject tempHealthPoint;
 	bool ________________;
 
 	//bounds of this and children
@@ -16,21 +23,30 @@ public class Enemy : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
-	
+
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
-		Move();
 		if(transform.position.x < leftX)
 		{
+			TakeDamage();
 			Destroy(this.gameObject);
-			GameObject go = GameObject.Find("Slingshot");
-			Slingshot slingShot = go.GetComponent<Slingshot>();
-			slingShot.playerHealth--;
+		}
+		else
+		{
+//			if(this.gameObject.name == "FastEnemy(Clone)")
+//			{
+//				FastEnemyMovement();
+//			}
+//			else
+//			{
+//				Move();
+//			}//end inner if-else
+			Move();
 
-		}//end if
+		}//end outer if-else
 	}
 
 	public virtual void Move()
@@ -52,16 +68,33 @@ public class Enemy : MonoBehaviour
 		}
 	}//end position
 
-	void OnCollisionEnter(Collision coll)
+	void TakeDamage()
 	{
 		GameObject go = GameObject.Find("Slingshot");
 		Slingshot slingShot = go.GetComponent<Slingshot>();
 
-		if(coll.gameObject.tag == "Asteroid")
+			if(slingShot.playerHealth > 0)
+			{
+				slingShot.playerHealth--;
+			}
+
+	}//end TakeDamage
+
+	void FastEnemyMovement()
+	{
+		if(transform.position.y > moveUp)
 		{
-			slingShot.playerHealth--;
+			Vector3 tempPos = position;
+			tempPos.y -= speed * Time.deltaTime;
+			position = tempPos;
+			Move();
 		}
-
-	}//end OnCollisionEnter
-
+		if(transform.position.y < moveDown)
+		{
+			Vector3 tempPos = position;
+			tempPos.y -= speed * Time.deltaTime;
+			position = tempPos;
+			Move();
+		}
+	}
 }

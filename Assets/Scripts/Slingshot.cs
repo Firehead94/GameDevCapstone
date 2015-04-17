@@ -24,7 +24,7 @@ public class Slingshot : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		GameOver();
+	//	GameOver();
 		if (!aimingMode) return;
 		// get mouse position in 2d coordinates
 		Vector3 mousePos2D = Input.mousePosition;
@@ -77,6 +77,7 @@ public class Slingshot : MonoBehaviour
 	{
 		launchPoint.SetActive(false);
 	}
+
 	void OnMouseDown()
 	{
 		if(Time.time > nextShot)
