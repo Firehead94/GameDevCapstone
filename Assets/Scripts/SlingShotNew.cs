@@ -49,7 +49,6 @@ class SlingShotNew : MonoBehaviour
             Dragging();
         if (spring != null)
         {
-            print("spring not null");
             if (!rigidbody2D.isKinematic && prevVelocity.sqrMagnitude > rigidbody2D.velocity.sqrMagnitude)
             {
                 Destroy(spring);
@@ -63,7 +62,6 @@ class SlingShotNew : MonoBehaviour
         }
         else
         {
-            print("spring null");
             front.enabled = false;
             back.enabled = false;
         }
@@ -71,14 +69,8 @@ class SlingShotNew : MonoBehaviour
 
     void LineRendererSetup()
     {
-        front.SetPosition(0, front.transform.position);
-        back.SetPosition(0, back.transform.position);
-
-        front.sortingLayerName = "Foreground";
-        back.sortingLayerName = "Foreground";
-
-        front.sortingOrder = 3;
-        back.sortingOrder = 1;
+        front.SetPosition(0, front.transform.position - new Vector3 (-0.25f, 0, 0));
+        back.SetPosition(0, back.transform.position - new Vector3(-0.20f, 0, 0));
 
     }
 
@@ -106,7 +98,7 @@ class SlingShotNew : MonoBehaviour
         }
 
         mouseWorldPoint.z = 0f;
-        transform.position = mouseWorldPoint;
+        transform.position = mouseWorldPoint - new Vector3(0,0,3);
     }
 
     void LineRendererUpdate()
@@ -114,8 +106,8 @@ class SlingShotNew : MonoBehaviour
         Vector2 slingToProjectile = transform.position - front.transform.position;
         leftToProjectile.direction = slingToProjectile;
         Vector3 holdPoint = leftToProjectile.GetPoint(slingToProjectile.magnitude + circleRadius);
-        front.SetPosition(1, holdPoint);
-        back.SetPosition(1, holdPoint);
+        front.SetPosition(1, holdPoint - new Vector3(0, 0, 0));
+        back.SetPosition(1, holdPoint - new Vector3(0,0,-2));
     }
 
 
