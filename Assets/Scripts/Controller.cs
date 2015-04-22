@@ -21,8 +21,7 @@ public class Controller : MonoBehaviour {
 
     public GameObject pauseScreen;
     public GameObject gameOverScreen;
-
-    public int spawnCooldown = 0;
+    public bool cooldown = false;
 
 
 	// Use this for initialization
@@ -65,11 +64,13 @@ public class Controller : MonoBehaviour {
 
     IEnumerator Spawn()
     {
-        if (GameObject.FindGameObjectsWithTag("ammo").Length < 2 || GameObject.FindGameObjectsWithTag("ammoCap").Length < 2)
+        if (!cooldown)
         {
-            yield return new WaitForSeconds(0.5f);
-            Instantiate(ammo[ammoIndex], spawnLoc, spawnRot);
+            cooldown = true;
             yield return new WaitForSeconds(1.5f);
+            Instantiate(ammo[ammoIndex], spawnLoc, spawnRot);
+            yield return new WaitForSeconds(0.5f);
+            cooldown = false;
         }
     }
 
@@ -111,7 +112,9 @@ public class Controller : MonoBehaviour {
             ammoIndex = 0;
             foreach (GameObject go in GameObject.FindGameObjectsWithTag("ammoCap"))
                 Destroy(go);
+            StopAllCoroutines();
             shouldSpawn = true;
+            cooldown = false;
         }
 
     }
@@ -123,6 +126,8 @@ public class Controller : MonoBehaviour {
             ammoIndex = 1;
             foreach (GameObject go in GameObject.FindGameObjectsWithTag("ammo"))
                 Destroy(go);
+            StopAllCoroutines();
+            cooldown = false;
             shouldSpawn = true;
         }
 

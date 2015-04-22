@@ -4,49 +4,45 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-class SlingShotNew : MonoBehaviour 
+class Shot : MonoBehaviour 
 {
 
     public float maxStretch = 3f;
 
-    public LineRenderer front;
-    public LineRenderer back;
+    LineDraw lines;
 
     public SpringJoint2D spring;
     private bool clickedOn;
     private Transform slingshot;
 
-    private Ray rayToMouse;
-    private Ray leftToProjectile;
     private float maxStretchSqr;
-    private float circleRadius;
+
     private Vector2 prevVelocity;
     private Controller control;
 
     void Awake()
     {
-
+        
     }
 
     void Start()
     {
+        lines = new LineDraw(gameObject);
         control = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Controller>();
         spring = GetComponent<SpringJoint2D>();
-        front = GameObject.FindGameObjectWithTag("front").GetComponent<LineRenderer>();
-        back = GameObject.FindGameObjectWithTag("back").GetComponent<LineRenderer>();
+        lines.front = GameObject.FindGameObjectWithTag("front").GetComponent<LineRenderer>();
+        lines.back = GameObject.FindGameObjectWithTag("back").GetComponent<LineRenderer>();
         spring.connectedBody = GameObject.FindGameObjectWithTag("front").GetComponent<Rigidbody2D>();
         slingshot = spring.connectedBody.transform;
-        
-        rayToMouse = new Ray(slingshot.position, Vector3.zero);
-        leftToProjectile = new Ray(front.transform.position, Vector3.zero);
+
+        lines.rayToMouse = new Ray(slingshot.position, Vector3.zero);
+        lines.leftToProjectile = new Ray(lines.front.transform.position, Vector3.zero);
         maxStretchSqr = maxStretch * maxStretch;
-        CircleCollider2D circle = collider2D as CircleCollider2D;
-        circleRadius = circle.radius;
         rigidbody2D.isKinematic = true;
         spring.enabled = true;
-        front.enabled = true;
-        back.enabled = true;
-        LineRendererSetup();
+        lines.front.enabled = true;
+        lines.back.enabled = true;
+        lines.LineRendererSetup();
     }
 
     void FixedUpdate()
@@ -64,10 +60,10 @@ class SlingShotNew : MonoBehaviour
             if (!rigidbody2D.isKinematic && prevVelocity.sqrMagnitude > rigidbody2D.velocity.sqrMagnitude)
             {
                 spring.enabled = false;
-                front.enabled = false;
-                back.enabled = false;
-                rigidbody2D.velocity = prevVelocity;
+                lines.front.enabled = false;
+                lines.back.enabled = false;
                 
+                rigidbody2D.velocity = prevVelocity;            
             }
 
             if (!clickedOn)
@@ -77,22 +73,17 @@ class SlingShotNew : MonoBehaviour
             }
 
 
-            LineRendererUpdate();
+            lines.LineRendererUpdate();
         }
         else
         {
-            front.enabled = false;
-            back.enabled = false;
+            lines.front.enabled = false;
+            lines.back.enabled = false;
             
         }
-    }
-
-    void LineRendererSetup()
-    {
-        front.SetPosition(0, front.transform.position - new Vector3 (-0.25f, 0, 0));
-        back.SetPosition(0, back.transform.position - new Vector3(-0.20f, 0, 0));
 
     }
+
 
     void OnMouseDown()
     {
@@ -114,22 +105,15 @@ class SlingShotNew : MonoBehaviour
         Vector2 slingToMouse = mouseWorldPoint - slingshot.position;
         if (slingToMouse.sqrMagnitude > maxStretchSqr)
         {
-            rayToMouse.direction = slingToMouse;
-            mouseWorldPoint = rayToMouse.GetPoint(maxStretch);
+            lines.rayToMouse.direction = slingToMouse;
+            mouseWorldPoint = lines.rayToMouse.GetPoint(maxStretch);
         }
 
         mouseWorldPoint.z = 0f;
         transform.position = mouseWorldPoint - new Vector3(0,0,3);
     }
 
-    void LineRendererUpdate()
-    {
-        Vector2 slingToProjectile = transform.position - front.transform.position;
-        leftToProjectile.direction = slingToProjectile;
-        Vector3 holdPoint = leftToProjectile.GetPoint(slingToProjectile.magnitude + circleRadius);
-        front.SetPosition(1, holdPoint - new Vector3(0, 0, 0));
-        back.SetPosition(1, holdPoint - new Vector3(0,0,-2));
-    }
+
 
     void OnCollisionEnter2D(Collision2D coll)
     {
@@ -164,9 +148,9 @@ class SlingShotNew : MonoBehaviour
                 control.SetHP(1);
             }
         }
-        if (coll.gameObject.tag.Equals("spawnnew"))
+        if (coll.gameObject.tag.Equals("spawnnew") && !clickedOn)
         {
-            control.shouldSpawn = true;
+           control.shouldSpawn = true;
         }
 
     }
