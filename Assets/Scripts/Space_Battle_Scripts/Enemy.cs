@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+/*
 public class Enemy : MonoBehaviour 
 {
 	// Max distance an enemy can move to the left
@@ -98,3 +98,4 @@ public class Enemy : MonoBehaviour
 		}
 	}
 }
+*/

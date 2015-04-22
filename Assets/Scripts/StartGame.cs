@@ -5,6 +5,6 @@ public class StartGame : MonoBehaviour
 {
     public void loadGame()
     {
-        Application.LoadLevel("Space_Battle");    
+        Application.LoadLevel("_Level_1");    
     }
 }

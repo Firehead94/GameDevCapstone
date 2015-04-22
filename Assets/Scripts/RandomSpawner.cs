@@ -10,7 +10,7 @@ public class RandomSpawner : MonoBehaviour
 	public static int ticker = 20;
 
 	public GameObject[] prefabEnemies;
-	public float enemySpawnPerSecond = 0.5f;
+	public float enemySpawnPerSecond = 0.3f;
 	public float enemySpawnPadding = 1.5f;
 	public bool ______________;
 
@@ -50,11 +50,11 @@ public class RandomSpawner : MonoBehaviour
 		GameObject go = Instantiate (prefabEnemies [index]) as GameObject;
 		Vector3 position = Vector3.zero;
 
-		float yMin = -8f;
-		float yMax = 10f;
+		float yMin = -3f;
+		float yMax = 4f;
 
 		position.y = Random.Range (yMin, yMax);
-		position.x = 25f;
+		position.x = 15f;
 		go.transform.position = position;
 
 		//Call SpawnEnemy() again in a couple of seconds
@@ -67,7 +67,7 @@ public class RandomSpawner : MonoBehaviour
 	private static void OnTimedEvent(object source, ElapsedEventArgs e)
 	{
 		ticker--;
-		print (ticker);
+		//print (ticker);
 		if(ticker == 0)
 		{
 			waveTimer.Stop();
