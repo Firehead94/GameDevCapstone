@@ -6,13 +6,18 @@ using System.Timers;
 public class RandomSpawner : MonoBehaviour 
 {
 	public static RandomSpawner RS;
-	public static Timer waveTimer;
-	public static int ticker = 5;
+	public static float waveTimer;
 
 	public GameObject[] prefabEnemies;
-	public float enemySpawnPerSecond = 0.3f;
+    public GameObject bossship;
+    public Transform bossspawner;
+	public float enemySpawnPerSecond = 0.5f;
 	public float enemySpawnPadding = 1.5f;
+    public int time = 30; //seconds
 	public bool ______________;
+    public GameObject alert1;
+    public GameObject alert2;
+
 
 	//Delay between Enemy spawns
 	public float enemySpawnRate;
@@ -20,15 +25,21 @@ public class RandomSpawner : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
-		waveTimer = new Timer(1000);
-		waveTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
-		waveTimer.Enabled = true;
+		waveTimer = time;
+        bossspawner = GameObject.FindGameObjectWithTag("bossspawner").transform;
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
-
+        if (waveTimer >= 1)
+        {
+            waveTimer -= 1 * Time.deltaTime;
+        }
+        else if (waveTimer <= 1 && GameObject.FindGameObjectsWithTag("bossship").Length < 1)
+        {
+            SpawnBoss();
+        }
 	}
 
 	void Awake()
@@ -37,13 +48,13 @@ public class RandomSpawner : MonoBehaviour
 
 		enemySpawnRate = 1f / enemySpawnPerSecond;
 
-		Invoke ("SpawnEnemy", enemySpawnRate);
+		StartCoroutine(SpawnEnemy());
 	}//end Awake
 
 	/**
 	 * Begins spawning enemies as soon as scene begins
 	 */
-	public void SpawnEnemy()
+	IEnumerator SpawnEnemy()
 	{
 		//Pick random enemy prefab to instantiate
 		int index = Random.Range (0, prefabEnemies.Length);
@@ -52,26 +63,40 @@ public class RandomSpawner : MonoBehaviour
 
 		float yMin = -3f;
 		float yMax = 4f;
+        float z = -2;
 
 		position.y = Random.Range (yMin, yMax);
 		position.x = 15f;
+        position.z = z;
 		go.transform.position = position;
 
 		//Call SpawnEnemy() again in a couple of seconds
-		Invoke ("SpawnEnemy", enemySpawnRate);
+		yield return new WaitForSeconds(enemySpawnRate);
+        StartCoroutine(SpawnEnemy());
 	}//end SpawnEnemy
 
 	/**
 	 * Keeps track of ticker timer and stops the timer if ticker reaches 0
 	 */
-	private static void OnTimedEvent(object source, ElapsedEventArgs e)
+	private void SpawnBoss()
 	{
-		ticker--;
-		//print (ticker);
-		if(ticker == 0)
-		{
-			waveTimer.Stop();
-		}
+        Alert(1);
+        Instantiate(bossship, bossspawner.position, bossspawner.rotation);
 	}//end OnTimedEvent
+
+    public void Alert(int i)
+    {
+        switch (i)
+        {
+            case 1: alert1.SetActive(true);
+                alert2.SetActive(false);
+                break;
+            case 2: alert2.SetActive(true);
+                alert1.SetActive(false);
+                break;
+            default: break;
+        }
+        
+    }
 	
 }
