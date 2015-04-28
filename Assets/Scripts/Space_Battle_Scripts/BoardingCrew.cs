@@ -18,7 +18,7 @@ public class BoardingCrew : MonoBehaviour
 
 	void OnTriggerEnter(Collider coll)
 	{
-		if(coll.gameObject.tag == "Boss")
+		if(coll.gameObject.tag == "bossShip")
 		{
 			Destroy(coll.gameObject);
 			Destroy (this.gameObject);

@@ -7,7 +7,7 @@ public class RandomSpawner : MonoBehaviour
 {
 	public static RandomSpawner RS;
 	public static Timer waveTimer;
-	public static int ticker = 20;
+	public static int ticker = 5;
 
 	public GameObject[] prefabEnemies;
 	public float enemySpawnPerSecond = 0.3f;
@@ -67,18 +67,11 @@ public class RandomSpawner : MonoBehaviour
 	private static void OnTimedEvent(object source, ElapsedEventArgs e)
 	{
 		ticker--;
-		//print (ticker);
+		print (ticker);
 		if(ticker == 0)
 		{
 			waveTimer.Stop();
 		}
 	}//end OnTimedEvent
-
-	/**
-	 * Stops the wave if ticker gets to 0 and player has at least one life
-	 */
-	void StopWave()
-	{
-
-	}//end StopWave
+	
 }

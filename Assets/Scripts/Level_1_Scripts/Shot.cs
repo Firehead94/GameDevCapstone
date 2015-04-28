@@ -138,22 +138,5 @@ class Shot : MonoBehaviour
         
     }
 
-    void OnTriggerExit2D(Collider2D coll)
-    {
-        if (coll.gameObject.tag.Equals("bounds"))
-        {
-            Destroy(this.gameObject);
-            if (coll.gameObject.tag.Equals("alien"))
-            {
-                control.SetHP(1);
-            }
-        }
-        if (coll.gameObject.tag.Equals("spawnnew") && !clickedOn)
-        {
-           control.shouldSpawn = true;
-        }
-
-    }
-
 }
 

@@ -34,14 +34,7 @@ public class Enemy : MonoBehaviour {
         }
         else
         {
-            //			if(this.gameObject.name == "FastEnemy(Clone)")
-            //			{
-            //				FastEnemyMovement();
-            //			}
-            //			else
-            //			{
-            //				Move();
-            //			}//end inner if-else
+
             Move();
 
         }//end outer if-else

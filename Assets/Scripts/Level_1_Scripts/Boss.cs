@@ -3,11 +3,10 @@ using System.Collections;
 
 public class Boss : MonoBehaviour 
 {
-	public Material[] bossColors = new Material[1];
-
 	// Use this for initialization
 	void Start () 
 	{
+		gameObject.renderer.enabled = false;
 	}
 	
 	// Update is called once per frame
@@ -21,21 +20,13 @@ public class Boss : MonoBehaviour
 
 		if(RandomSpawner.ticker == 0)
 		{
+			gameObject.renderer.enabled = true;
 			SphereCollider coll = gameObject.GetComponent<SphereCollider>();
 			coll.enabled = true;
-			gameObject.renderer.material = bossColors[1];
+
 		}//end if
 	}//end DetermineVulnerability
 
-//	void OnCollisionEnter (Collision col)
-//	{
-//		if(col.gameObject.name == "BoardingCrew")
-//		{
-//			Destroy(col.gameObject);
-//			Destroy(this.gameObject);
-//			Application.LoadLevel("_Boss_Ship");
-//		}//end if
-//	}//end OnCollisionEnter
 }
 
 
