@@ -134,6 +134,11 @@ class Shot : MonoBehaviour
                 Destroy(this.gameObject);
                 control.SetHP(1);
             }
+            else if (coll.gameObject.tag.Equals("bossship") && !gameObject.GetComponent<Rigidbody2D>().isKinematic)
+            {
+                Destroy(this.gameObject);
+                Application.LoadLevel("_Boss_Ship");
+            }
         }
         
     }
