@@ -62,7 +62,6 @@ class Shot : MonoBehaviour
                 spring.enabled = false;
                 lines.front.enabled = false;
                 lines.back.enabled = false;
-                
                 rigidbody2D.velocity = prevVelocity;            
             }
 
@@ -141,6 +140,20 @@ class Shot : MonoBehaviour
             }
         }
         
+    }
+
+
+    void OnTriggerExit2D(Collider2D coll)
+    {
+        if (coll.gameObject.tag.Equals("spawnnew") && !clickedOn)
+        {
+            control.shouldSpawn = true;
+        }
+
+        if (coll.gameObject.tag.Equals("bounds"))
+        {
+            Destroy(gameObject);
+        }
     }
 
 }

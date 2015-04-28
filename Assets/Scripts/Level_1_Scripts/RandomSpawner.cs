@@ -67,7 +67,7 @@ public class RandomSpawner : MonoBehaviour
 	private static void OnTimedEvent(object source, ElapsedEventArgs e)
 	{
 		ticker--;
-		print (ticker);
+		//print (ticker);
 		if(ticker == 0)
 		{
 			waveTimer.Stop();

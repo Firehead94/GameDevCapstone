@@ -66,6 +66,7 @@ public class Controller : MonoBehaviour {
     {
         if (!cooldown)
         {
+            print("spawn new");
             cooldown = true;
             yield return new WaitForSeconds(1.5f);
             Instantiate(ammo[ammoIndex], spawnLoc, spawnRot);
