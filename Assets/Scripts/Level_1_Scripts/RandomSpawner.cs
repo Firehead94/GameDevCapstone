@@ -76,7 +76,7 @@ public class RandomSpawner : MonoBehaviour
 	}//end SpawnEnemy
 
 	/**
-	 * Keeps track of ticker timer and stops the timer if ticker reaches 0
+	 * Spawns the boss ship and posts an alert on the GUI
 	 */
 	private void SpawnBoss()
 	{
