@@ -22,7 +22,9 @@ public class Boss : MonoBehaviour
         rs = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<RandomSpawner>();
     }
 
-    // Update is called once per frame
+    /*
+     * Determines if the boss has been hit and changes the color of his ship if he has
+     */
     void Update()
     {
         Vector3 tempPos = gameObject.transform.position;
@@ -32,7 +34,9 @@ public class Boss : MonoBehaviour
         gameObject.transform.position = tempPos;
     
     }
-
+	/*
+	 * If the boss is hit by regular ammo then he loses one health
+	 */
     void OnCollisionEnter2D(Collision2D coll)
     {
         if (coll.gameObject.tag.Equals("ammo") && this.health > 0)
@@ -45,6 +49,9 @@ public class Boss : MonoBehaviour
                 rs.Alert(2);
             }
         }
+		/*
+		 * If the boss is vulnerable and is hit by the capsule then it loads the boss ship level
+		 */
         else if(coll.gameObject.tag.Equals("ammoCap") && this.health < 1)
         {
             StartCoroutine(explode());

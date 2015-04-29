@@ -61,7 +61,7 @@ public class Controller : MonoBehaviour {
 
 	}
 
-
+	//Sets a cooldown rate for ammo so the player can't rapid fire
     IEnumerator Spawn()
     {
         if (!cooldown)
@@ -74,12 +74,13 @@ public class Controller : MonoBehaviour {
             cooldown = false;
         }
     }
-
+	//Sets the score on the players GUI
     public void SetScore(int score)
     {
         this.scorecount += score;
     }
 
+	//Sets player hit points and determines if the player loses
     public void SetHP(int hp)
     {
         if (health > 0)
@@ -105,6 +106,7 @@ public class Controller : MonoBehaviour {
         this.armorcount -= armor;
         this.armor[armorcount].SetActive(false);
     }
+
 
     public void AmmoBasic()
     {

@@ -27,6 +27,7 @@ class Shot : MonoBehaviour
         
     }
 
+	// Initiates the mechanics for the slingshot
     void Start()
     {
         lines = new LineDraw(gameObject);
@@ -85,13 +86,13 @@ class Shot : MonoBehaviour
 
     }
 
-
+	//Activates slingshot
     void OnMouseDown()
     {
         spring.enabled = false;
         clickedOn = true;
     }
-
+	//Slingshot release
     void OnMouseUp()
     {
         spring.enabled = true;
@@ -99,7 +100,7 @@ class Shot : MonoBehaviour
         clickedOn = false;
         
     }
-
+	//Stretching out the slingshot based on the players mouse
     void Dragging()
     {
         Vector3 mouseWorldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -115,7 +116,7 @@ class Shot : MonoBehaviour
     }
 
 
-
+	//If an alien is hit by standard ammo then destroy it
     void OnCollisionEnter2D(Collision2D coll)
     {
         if (this.gameObject.tag.Equals("ammo"))
@@ -128,7 +129,7 @@ class Shot : MonoBehaviour
                 Destroy(this.gameObject);
             }
         }
-
+		//If an enemy is hit by a capsule then cause bounce from the impact
         if (this.gameObject.tag.Equals("ammoCap"))
         {
             if (coll.gameObject.tag.Equals("alien") && !gameObject.GetComponent<Rigidbody2D>().isKinematic)
@@ -141,7 +142,7 @@ class Shot : MonoBehaviour
         
     }
 
-
+	//If an enemy hits the game level bounds then destory that prefab
     void OnTriggerExit2D(Collider2D coll)
     {
         if (coll.gameObject.tag.Equals("spawnnew") && !clickedOn)

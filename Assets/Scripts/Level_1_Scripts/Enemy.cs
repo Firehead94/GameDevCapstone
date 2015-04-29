@@ -40,6 +40,7 @@ public class Enemy : MonoBehaviour {
         }//end outer if-else
 	}
 
+	// Player takes damage if an alien collides with them
     void OnTriggerEnter2D(Collider2D coll)
     {
         if (coll.gameObject.tag.Equals("player"))
