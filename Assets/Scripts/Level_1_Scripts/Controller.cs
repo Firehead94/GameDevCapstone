@@ -21,7 +21,10 @@ public class Controller : MonoBehaviour {
 
     public GameObject pauseScreen;
     public GameObject gameOverScreen;
+    public GameObject winScreen;
     public bool cooldown = false;
+
+    public bool win = false;
 
 
 	// Use this for initialization
@@ -39,6 +42,11 @@ public class Controller : MonoBehaviour {
         if (gameOver)
         {
             gameOverScreen.SetActive(true);
+        }
+
+        if (win)
+        {
+            winScreen.SetActive(true);
         }
 
         if (Input.GetButton("Cancel"))

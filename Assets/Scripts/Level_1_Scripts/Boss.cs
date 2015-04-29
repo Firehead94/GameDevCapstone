@@ -12,6 +12,7 @@ public class Boss : MonoBehaviour
     public int maxHealth = 4;
     public int health;
     public GameObject explosion;
+    public GameObject winScreen;
 
 
     // Use this for initialization
@@ -55,8 +56,10 @@ public class Boss : MonoBehaviour
         else if(coll.gameObject.tag.Equals("ammoCap") && this.health < 1)
         {
             StartCoroutine(explode());
-            
-            
+
+            new WaitForSeconds(3);
+            control.win = true; ;
+           
         }
         else
         {
@@ -89,7 +92,7 @@ public class Boss : MonoBehaviour
         Instantiate(explosion, gameObject.transform.position, gameObject.transform.rotation);
         Destroy(gameObject);
         yield return new WaitForSeconds(1);
-        Application.LoadLevel("_Scene_Main");
+        
 
     }
 
