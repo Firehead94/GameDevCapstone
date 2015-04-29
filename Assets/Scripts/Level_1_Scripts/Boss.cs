@@ -11,6 +11,7 @@ public class Boss : MonoBehaviour
 
     public int maxHealth = 4;
     public int health;
+    public GameObject explosion;
 
 
     // Use this for initialization
@@ -37,6 +38,7 @@ public class Boss : MonoBehaviour
         if (coll.gameObject.tag.Equals("ammo") && this.health > 0)
         {
             this.health -= 1;
+            Instantiate(explosion, gameObject.transform.position, gameObject.transform.rotation);
             Destroy(coll.gameObject);
             if (this.health < 1)
             {
@@ -45,8 +47,9 @@ public class Boss : MonoBehaviour
         }
         else if(coll.gameObject.tag.Equals("ammoCap") && this.health < 1)
         {
-            print("next level");
-            Application.LoadLevel("_Boss_Ship");
+            StartCoroutine(explode());
+            
+            
         }
         else
         {
@@ -59,6 +62,27 @@ public class Boss : MonoBehaviour
     {
 
         return (hp - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
+
+    }
+
+    IEnumerator explode()
+    {
+        Instantiate(explosion, gameObject.transform.position, gameObject.transform.rotation);
+        yield return new WaitForSeconds(0.5f);
+        Instantiate(explosion, gameObject.transform.position + new Vector3(0,0.5f,0), gameObject.transform.rotation);
+        yield return new WaitForSeconds(0.2f);
+        Instantiate(explosion, gameObject.transform.position + new Vector3(0.5f, 0.5f, 0), gameObject.transform.rotation);
+        yield return new WaitForSeconds(0.3f);
+        Instantiate(explosion, gameObject.transform.position + new Vector3(-0.5f, 0, 0), gameObject.transform.rotation);
+        yield return new WaitForSeconds(0.5f);
+        Instantiate(explosion, gameObject.transform.position + new Vector3(0, -0.5f, 0), gameObject.transform.rotation);
+        yield return new WaitForSeconds(0.2f);
+        Instantiate(explosion, gameObject.transform.position + new Vector3(-0.5f, -0.5f, 0), gameObject.transform.rotation);
+        yield return new WaitForSeconds(0.5f);
+        Instantiate(explosion, gameObject.transform.position, gameObject.transform.rotation);
+        Destroy(gameObject);
+        yield return new WaitForSeconds(1);
+        Application.LoadLevel("_Scene_Main");
 
     }
 

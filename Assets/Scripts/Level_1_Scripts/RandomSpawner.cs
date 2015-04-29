@@ -13,7 +13,7 @@ public class RandomSpawner : MonoBehaviour
     public Transform bossspawner;
 	public float enemySpawnPerSecond = 0.5f;
 	public float enemySpawnPadding = 1.5f;
-    public int time = 30; //seconds
+    public int time = 60; //seconds
 	public bool ______________;
     public GameObject alert1;
     public GameObject alert2;
@@ -61,7 +61,7 @@ public class RandomSpawner : MonoBehaviour
 		GameObject go = Instantiate (prefabEnemies [index]) as GameObject;
 		Vector3 position = Vector3.zero;
 
-		float yMin = -3f;
+		float yMin = -1.5f;
 		float yMax = 4f;
         float z = -2;
 

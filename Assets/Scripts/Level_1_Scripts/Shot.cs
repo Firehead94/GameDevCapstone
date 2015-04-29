@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Collections;
 using UnityEngine;
 
 class Shot : MonoBehaviour 
@@ -19,6 +19,8 @@ class Shot : MonoBehaviour
 
     private Vector2 prevVelocity;
     private Controller control;
+
+    public GameObject explosion;
 
     void Awake()
     {
@@ -120,6 +122,7 @@ class Shot : MonoBehaviour
         { 
             if (coll.gameObject.tag.Equals("alien") && !gameObject.GetComponent<Rigidbody2D>().isKinematic)
             {
+                Instantiate(explosion, gameObject.transform.position, gameObject.transform.rotation);
                 Destroy(coll.gameObject);
                 control.SetScore(1);
                 Destroy(this.gameObject);
@@ -152,5 +155,11 @@ class Shot : MonoBehaviour
         }
     }
 
+
+   
+
 }
+
+
+
 
